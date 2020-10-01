@@ -1,0 +1,14 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/sibos-hackathon-2020-team-06/roundtrip', '.']
+  timeout: 500s
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/sibos-hackathon-2020-team-06/roundtrip']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['set', 'image', 'deployment/roundtrip', 'my-container=gcr.io/sibos-hackathon-2020-team-06/roundtrip']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-southeast1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+timeout: 660s
+tags: ['team06', 'ftw']
+images: ['gcr.io/sibos-hackathon-2020-team-06/roundtrip']
