@@ -1,4 +1,4 @@
-# This file configures the hello-world app which serves public web traffic.
+# just a starter
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
       - name: roundtrip
-        # Replace $GCLOUD_PROJECT with your project ID
-        image: gcr.io/$GCLOUD_PROJECT/roundtrip:latest
+        image: gcr.io/sibos-hackathon-2020-team-06/roundtrip:latest
         # This app listens on port 8080 for web traffic by default.
         ports:
         - containerPort: 8080
