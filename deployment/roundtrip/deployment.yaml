@@ -13,9 +13,10 @@ spec:
       labels:
         app: roundtrip
     spec:
+      serviceAccountName: serviceuser
       containers:
       - name: roundtrip
-        image: gcr.io/sibos-hackathon-2020-team-06/roundtrip:latest
+        image: gcr.io/sibos-hackathon-2020-team-06/roundtrip
         # This app listens on port 8080 for web traffic by default.
         ports:
         - containerPort: 8080
