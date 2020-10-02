@@ -101,7 +101,7 @@ def hello_world():
     # target = os.environ.get('TARGET', 'World')
     while mydb == None:
         connect_database()
-    return 'Hello {}! and also Pete! and Alvin and Agus too!\n'.format(mydb)
+    return 'Hello {}! and also Pete and Alvin and Agus too!\n'.format(mydb)
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
