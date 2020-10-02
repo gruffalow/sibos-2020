@@ -86,7 +86,7 @@ def hello_world():
     try:
         db = connect_database()
 
-        df = pd.read_sql("select * from messages limit 10", db, chunksize=100)
+        df = pd.read_sql("select * from messages limit 10", db)
         data = df.to_html()
         disconnect_database(db)
     except Error as e:
