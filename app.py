@@ -20,7 +20,11 @@ DB_USER  = os.environ.get("DB_USER", None)
 DB_PASS  = os.environ.get("DB_PASS", None)
 DB_NAME  = os.environ.get("DB_NAME", None)
 
-print (DB_NAME)
+logger.info("dbHost : %s", SQL_HOST)
+logger.info("dbPort : %s", DB_PORT)
+logger.info("dbUser : %s", DB_USER)
+logger.info("dbPass : %s", DB_PASS)
+logger.info("dbName : %s", DB_NAME)
 
 # Make sure that we have all the pieces we must have in order to connect to our db properly
 if not DB_USER:
@@ -64,7 +68,7 @@ def connect_database():
         if attempt_num >= backoff_count:
             wait_amount = wait_amount * 2
         logger.warning("Couldn't connect to the MySQL instance, trying again in {} second(s).".format(wait_amount))
-        print (e)
+        logger.warning(e, exc_info=True)
         time.sleep(wait_amount)
         if wait_amount > 60:
             logger.error("Giving up on connecting to the database")
