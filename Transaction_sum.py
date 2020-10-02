@@ -7,7 +7,7 @@ Created on Fri Oct  2 15:02:55 2020
 
 import pymysql
 import pandas as pd
-from api_fx import APIConverter
+from utils.api_fx import APIConverter
 
 
 connection = pymysql.connect(host='34.87.0.48',
