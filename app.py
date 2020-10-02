@@ -1,11 +1,16 @@
 import os
 import time
 import sys
+import logging
 
 from flask import Flask
 import mysql.connector
 from mysql.connector import Error
 import pandas as pd
+
+FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'
+logging.basicConfig(format=FORMAT)
+logger = logging.getLogger('roundtrip')
 
 # from config import SQL instance connection info, and
 # our database information to connect to the db
@@ -19,16 +24,16 @@ print (DB_NAME)
 
 # Make sure that we have all the pieces we must have in order to connect to our db properly
 if not DB_USER:
-    print ("You have to specify a database user either by environment variable or pass one in with the -u flag.")
+    logger.error("You have to specify a database user either by environment variable or pass one in with the -u flag.")
     sys.exit(2)
 if not DB_PASS:
-    print ("You have to specify a database password either by environment variable or pass one in with the -p flag.")
+    logger.error("You have to specify a database password either by environment variable or pass one in with the -p flag.")
     sys.exit(2)
 if not DB_NAME:
-    print ("You have to specify a database name either by environment variable or pass one in with the -d flag.")
+    logger.error("You have to specify a database name either by environment variable or pass one in with the -d flag.")
     sys.exit(2)
 if not DB_PORT:
-    print ("You have to specify a database port either by environment variable or pass one in with the -P flag.")
+    logger.error("You have to specify a database port either by environment variable or pass one in with the -P flag.")
     sys.exit(2)
 
 
@@ -53,20 +58,21 @@ def connect_database():
             port=DB_PORT,
             database=DB_NAME
         )
-        print("Connected to database successfully")
+        logger.info("Connected to database successfully")
     except Error as e:
         attempt_num = attempt_num + 1
         if attempt_num >= backoff_count:
             wait_amount = wait_amount * 2
-        print ("Couldn't connect to the MySQL instance, trying again in {} second(s).".format(wait_amount))
+        logger.warning("Couldn't connect to the MySQL instance, trying again in {} second(s).".format(wait_amount))
         print (e)
         time.sleep(wait_amount)
         if wait_amount > 60:
-            print ("Giving up on connecting to the database")
+            logger.error("Giving up on connecting to the database")
             sys.exit(2)
 
 def disconnect_database():
     global db
+    global attempt_num
     attempt_num = 0
     db.close()
 
@@ -85,7 +91,8 @@ def hello_world():
         data = df.to_html()
         disconnect_database()
     except Error as e:
-        data = repr(e)
+        logger.error(e, exc_info=True)
+        data = "broken"
 
     return 'Hello {0}! and also Pete and Alvin and Agus too!\n{1}'.format(target, data)
 
