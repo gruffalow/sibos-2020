@@ -5,6 +5,7 @@ import sys
 from flask import Flask
 import mysql.connector
 from mysql.connector import Error
+import pandas as pd
 
 # from config import SQL instance connection info, and
 # our database information to connect to the db
@@ -31,7 +32,7 @@ if not DB_PORT:
 
 
 # Wait for our database connection
-mydb = None
+db = None
 attempt_num = 0
 wait_amount = 1
 # backoff_count is the static count for how many times we should try at one
@@ -42,13 +43,14 @@ backoff_count = 5
 def connect_database():
     global attempt_num
     global wait_amount
-    global mydb
+    global db
     try:
-        mydb = mysql.connector.connect(
+        db = mysql.connector.connect(
             host=SQL_HOST,
             user=DB_USER,
             passwd=DB_PASS,
-            port=DB_PORT
+            port=DB_PORT,
+            database=DB_NAME
         )
         print("Connected to database successfully")
     except Error as e:
@@ -62,14 +64,25 @@ def connect_database():
             print ("Giving up on connecting to the database")
             sys.exit(2)
 
+def disconnect_database():
+    db = None
+    attempt_num = 0
+    db.close()
+
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    # target = os.environ.get('TARGET', 'World')
-    while mydb == None:
-        connect_database()
-    return 'Hello {}! and also Pete and Alvin and Agus too!\n'.format(mydb)
+    target = os.environ.get('TARGET', 'World')
+    db = None
+    while db == None:
+        db = connect_database()
+
+    df = pd.read_sql("select * from findata limit 10", db, chunksize=100)
+    data = df.to_html()
+    disconnect_database()
+
+    return 'Hello {0}! and also Pete and Alvin and Agus too!\n{1}'.format(target, data)
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
