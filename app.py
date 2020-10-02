@@ -6,8 +6,6 @@ import pandas as pd
 
 from database import connection as db_con
 
-FORMAT = '%(asctime)-15s %(message)s'
-logging.basicConfig(format=FORMAT)
 logger = logging.getLogger('roundtrip')
 
 app = Flask(__name__)

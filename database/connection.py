@@ -6,8 +6,6 @@ import logging
 import mysql.connector
 from mysql.connector import Error
 
-FORMAT = '%(asctime)-15s %(message)s'
-logging.basicConfig(format=FORMAT)
 logger = logging.getLogger('roundtrip.database')
 
 # from config import SQL instance connection info, and
