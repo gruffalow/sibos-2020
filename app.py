@@ -75,13 +75,15 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     target = os.environ.get('TARGET', 'World')
-    db = None
-    while db == None:
-        db = connect_database()
+    try:
+        while db == None:
+            db = connect_database()
 
-    df = pd.read_sql("select * from messages limit 10", db, chunksize=100)
-    data = df.to_html()
-    disconnect_database()
+        df = pd.read_sql("select * from messages limit 10", db, chunksize=100)
+        data = df.to_html()
+        disconnect_database()
+    except Error as e:
+        data = repr(e)
 
     return 'Hello {0}! and also Pete and Alvin and Agus too!\n{1}'.format(target, data)
 
