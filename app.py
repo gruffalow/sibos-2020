@@ -4,10 +4,12 @@ import logging
 from flask import Flask
 import pandas as pd
 
+logging.basicConfig(level=logging.INFO)
+logging.getLogger().setLevel(logging.INFO)
+logging.info("Starting app")
+
 from database import connection as db_con
 
-logging.basicConfig(level=logging.INFO)
-logging.info("Starting app")
 
 app = Flask(__name__)
 
