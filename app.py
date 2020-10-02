@@ -15,6 +15,7 @@ DB_USER  = os.environ.get("DB_USER", None)
 DB_PASS  = os.environ.get("DB_PASS", None)
 DB_NAME  = os.environ.get("DB_NAME", None)
 
+print (DB_NAME)
 
 # Make sure that we have all the pieces we must have in order to connect to our db properly
 if not DB_USER:
@@ -78,7 +79,7 @@ def hello_world():
     while db == None:
         db = connect_database()
 
-    df = pd.read_sql("select * from findata limit 10", db, chunksize=100)
+    df = pd.read_sql("select * from messages limit 10", db, chunksize=100)
     data = df.to_html()
     disconnect_database()
 
