@@ -66,7 +66,7 @@ def connect_database():
             sys.exit(2)
 
 def disconnect_database():
-    db = None
+    global db
     attempt_num = 0
     db.close()
 
@@ -74,6 +74,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
+    global db
+
     target = os.environ.get('TARGET', 'World')
     try:
         while db == None:
