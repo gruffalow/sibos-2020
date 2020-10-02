@@ -41,46 +41,44 @@ if not DB_PORT:
     sys.exit(2)
 
 
-# Wait for our database connection
-db = None
-attempt_num = 0
-wait_amount = 1
-# backoff_count is the static count for how many times we should try at one
-# second increments before expanding the backoff time exponentially
-# Once the wait time passes a minute, we'll give up and exit with an error
-backoff_count = 5
-
 def connect_database():
-    global attempt_num
-    global wait_amount
-    global db
-    try:
-        db = mysql.connector.connect(
-            host=SQL_HOST,
-            user=DB_USER,
-            passwd=DB_PASS,
-            port=DB_PORT,
-            database=DB_NAME
-        )
-        logger.info("Connected to database successfully")
-    except Error as e:
-        attempt_num = attempt_num + 1
-        if attempt_num >= backoff_count:
-            wait_amount = wait_amount * 2
-        logger.warning("Couldn't connect to the MySQL instance, trying again in {} second(s).".format(wait_amount))
-        logger.warning(e, exc_info=True)
-        time.sleep(wait_amount)
-        if wait_amount > 60:
-            logger.error("Giving up on connecting to the database")
-            sys.exit(2)
-
-def disconnect_database():
-    global db
-    global attempt_num
+    # Wait for our database connection
+    db = None
     attempt_num = 0
+    wait_amount = 1
+    # backoff_count is the static count for how many times we should try at one
+    # second increments before expanding the backoff time exponentially
+    # Once the wait time passes a minute, we'll give up and exit with an error
+    backoff_count = 5
+    while db == None:
+        try:
+            db = mysql.connector.connect(
+                host=SQL_HOST,
+                user=DB_USER,
+                passwd=DB_PASS,
+                port=DB_PORT,
+                database=DB_NAME
+            )
+            logger.info("Connected to database successfully")
+        except Error as e:
+            attempt_num = attempt_num + 1
+            if attempt_num >= backoff_count:
+                wait_amount = wait_amount * 2
+            logger.warning("Couldn't connect to the MySQL instance, trying again in {} second(s).".format(wait_amount))
+            logger.warning(e, exc_info=True)
+            time.sleep(wait_amount)
+            if wait_amount > 60:
+                logger.error("Giving up on connecting to the database")
+                sys.exit(2)
+    return db
+
+
+def disconnect_database(db):
     db.close()
 
+
 app = Flask(__name__)
+
 
 @app.route('/')
 def hello_world():
@@ -88,12 +86,11 @@ def hello_world():
 
     target = os.environ.get('TARGET', 'World')
     try:
-        while db == None:
-            connect_database()
+        connect_database()
 
         df = pd.read_sql("select * from messages limit 10", db, chunksize=100)
         data = df.to_html()
-        disconnect_database()
+        disconnect_database(db)
     except Error as e:
         logger.error(e, exc_info=True)
         data = "broken"
