@@ -6,6 +6,11 @@ import pandas as pd
 
 from database import connection as db_con
 
+logging.error("Starting app")
+logging.warning("still starting")
+logging.info("starting some more")
+logging.debug("even more starting")
+
 app = Flask(__name__)
 
 
