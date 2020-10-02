@@ -1,7 +1,6 @@
 import os
 import time
 import sys
-import getopt
 
 from flask import Flask
 import mysql.connector
@@ -15,37 +14,6 @@ DB_USER  = os.environ.get("DB_USER", None)
 DB_PASS  = os.environ.get("DB_PASS", None)
 DB_NAME  = os.environ.get("DB_NAME", None)
 
-clean_table = True
-fullCmdArguments = sys.argv
-argumentList = fullCmdArguments[1:]
-unixOptions = "hH:P:u:p:d"
-gnuOptions = ["help", "host=", "port=", "user=", "passwd=", "dbname="]
-
-try:
-    arguments, values = getopt.getopt(argumentList, unixOptions, gnuOptions)
-except getopt.error as err:
-    print (str(err))
-    sys.exit(2)
-
-for currentArgument, currentValue in arguments:
-    if currentArgument in ("-H", "--host"):
-        SQL_HOST = currentValue
-    elif currentArgument in ("-P", "--port"):
-        DB_PORT = currentValue
-    elif currentArgument in ("-u", "--user"):
-        DB_USER = currentValue
-    elif currentArgument in ("-p", "--passwd"):
-        DB_PASS = currentValue
-    elif currentArgument in ("-d", "--dbname"):
-        DB_NAME = currentValue
-    elif currentArgument in ("-l", "--locations"):
-        LOCATIONS = int(currentValue)
-    elif currentArgument in ("-e", "--employees"):
-        EMPLOYEES = int(currentValue)
-    elif currentArgument in ("-a", "--auto"):
-        auto_create = True
-    elif currentArgument in ("-c", "--dontclean"):
-        clean_table = False
 
 # Make sure that we have all the pieces we must have in order to connect to our db properly
 if not DB_USER:
