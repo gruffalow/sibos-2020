@@ -6,8 +6,6 @@ import pandas as pd
 
 from database import connection as db_con
 
-logger = logging.getLogger('roundtrip')
-
 app = Flask(__name__)
 
 
@@ -21,7 +19,7 @@ def hello_world():
         data = df.to_html()
         db_con.disconnect_database(db)
     except Exception as e:
-        logger.error(e, exc_info=True)
+        logging.error(e, exc_info=True)
         data = "broken"
 
     return 'Hello {0}! and also Pete and Alvin and Agus too!\n{1}'.format(target, data)
