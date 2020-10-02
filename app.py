@@ -82,11 +82,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    global db
-
     target = os.environ.get('TARGET', 'World')
     try:
-        connect_database()
+        db = connect_database()
 
         df = pd.read_sql("select * from messages limit 10", db, chunksize=100)
         data = df.to_html()
