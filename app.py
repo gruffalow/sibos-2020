@@ -8,7 +8,7 @@ import mysql.connector
 from mysql.connector import Error
 import pandas as pd
 
-FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'
+FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT)
 logger = logging.getLogger('roundtrip')
 
