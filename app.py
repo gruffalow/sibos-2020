@@ -79,7 +79,7 @@ def hello_world():
     target = os.environ.get('TARGET', 'World')
     try:
         while db == None:
-            db = connect_database()
+            connect_database()
 
         df = pd.read_sql("select * from messages limit 10", db, chunksize=100)
         data = df.to_html()
