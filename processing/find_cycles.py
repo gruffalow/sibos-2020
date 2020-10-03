@@ -14,7 +14,7 @@ def process_remaining() -> bool:
     max_processed_msgno_df = pd.read_sql("SELECT IFNULL((SELECT max(end_msg_no) from processing_summary), -1) AS max_processed_msgno", db)
     max_processed_msgno = max_processed_msgno_df['max_processed_msgno'].iloc[0]
     logging.info("processing from %s", str(max_processed_msgno))
-    df = pd.read_sql("select * from messages where msgno > {0} order by msgno limit {1}".format(str(max_processed_msgno), str(batch_max_size)), db)
+    df = pd.read_sql("select * from messages where msgno > {0} and sender = 52A and type = '103' order by msgno limit {1}".format(str(max_processed_msgno), str(batch_max_size)), db)
 
     if df.empty:
         logging.info("no further messages found")

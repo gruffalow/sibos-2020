@@ -22,7 +22,7 @@ class LoopThread(Thread):
     def loop_process(self):
         logging.info("Processing")
         if process_remaining():
-            time.sleep(3)
+            time.sleep(10)
 
     def interrupted_process(self):
         logging.info("Interrupted!")
