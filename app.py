@@ -43,7 +43,8 @@ from actions.extracts import test_extract
 # Setup the routing from URL to code
 app.add_url_rule('/', 'root', test_extract)
 
+thread.start()
+
 # Run the app
 if __name__ == "__main__":
-    thread.start()
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
