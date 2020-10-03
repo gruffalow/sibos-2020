@@ -6,16 +6,44 @@ logging.basicConfig(level=logging.INFO)
 logging.getLogger().setLevel(logging.INFO)
 logging.info("Starting app")
 
-from flask import Flask
+from flask import Flask, request
+from threading import Event
+from processing.loopthread import LoopThread
+
+
+STOP_EVENT = Event()
+INTERRUPT_EVENT = Event()
+thread = LoopThread(STOP_EVENT, INTERRUPT_EVENT)
+
+app = Flask(__name__)
+
+@app.route("/interrupt")
+def interrupt():
+    INTERRUPT_EVENT.set()
+    return "OK", 200
+
+# http://flask.pocoo.org/snippets/67/
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+@app.route("/shutdown")
+def shutdown():
+    STOP_EVENT.set()
+    thread.join()
+    shutdown_server()
+    return "OK", 200
+
 
 # Import the actions to map to Flask
 from actions.extracts import test_extract
-
-app = Flask(__name__)
 
 # Setup the routing from URL to code
 app.add_url_rule('/', 'root', test_extract)
 
 # Run the app
 if __name__ == "__main__":
+    thread.start()
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
