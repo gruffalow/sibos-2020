@@ -49,3 +49,60 @@
   "total_credit_USD": 17359.12,
   "transaction_count": 3
 }
+
+
+{
+  "id": "MYBNUS21:0000000000000000000000000000000014",
+  "sources": {},
+  "destinations": {
+    "RPBNCN71:0000000000000000000000000000000919": {
+      "debit_USD": 3729.58,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000006080": {
+      "debit_USD": 2783.63,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000007879": {
+      "debit_USD": 2794.33,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000009018": {
+      "debit_USD": 6990.45,
+      "transaction_count": 1
+    }
+  },
+  "total_debit_USD": 16297.99,
+  "total_credit_USD": 0,
+  "transaction_count": 4
+}
+
+{
+  "id": "MYBNUS21:0000000000000000000000000000001548",
+  "sources": {},
+  "destinations": {
+    "RPBNCN71:0000000000000000000000000000001602": {
+      "debit_USD": 22783.31,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000002628": {
+      "debit_USD": 6078.52,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000004184": {
+      "debit_USD": 16193.77,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000005172": {
+      "debit_USD": 10303.24,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000006637": {
+      "debit_USD": 3437.37,
+      "transaction_count": 1
+    }
+  },
+  "total_debit_USD": 58796.21,
+  "total_credit_USD": 0,
+  "transaction_count": 5
+}
