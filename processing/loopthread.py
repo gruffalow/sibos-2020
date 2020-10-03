@@ -2,6 +2,7 @@ import logging
 import time
 from threading import Thread
 from processing.setup_tables import setup_tables
+from processing.find_cycles import process_remaining
 
 
 class LoopThread(Thread):
@@ -19,8 +20,9 @@ class LoopThread(Thread):
                 self.interrupt_event.clear()
 
     def loop_process(self):
-        logging.info("Processing!")
-        time.sleep(3)
+        logging.info("Processing")
+        if process_remaining():
+            time.sleep(3)
 
     def interrupted_process(self):
         logging.info("Interrupted!")
