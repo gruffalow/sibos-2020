@@ -32,8 +32,8 @@ def detect_cycles(destination, id, amount, sources):
     return cycle_detected, cycle_amount
 
 
-def add_sources(destination, id, amount, destination_transaction_count, full_sources, cursor):
-    sources = dict(full_sources)
+def add_sources(destination, id, amount, destination_transaction_count, new_sources, cursor):
+    sources = dict(new_sources)
     cursor.execute(account_relationships_select, (destination,))
     account_relationships_record = cursor.fetchone()
 
@@ -58,7 +58,7 @@ def add_sources(destination, id, amount, destination_transaction_count, full_sou
         source_details['sources'] = sources
         account_relationships['total_credit_USD'] = account_relationships['total_credit_USD'] + amount
         account_relationships['sources'][id] = source_details
-        cycle_detected, cycle_amount = detect_cycles(destination, id, source_details['credit_USD'], sources)
+        cycle_detected, cycle_amount = detect_cycles(destination, id, source_details['credit_USD'], account_relationships['sources'])
         cursor.execute(account_relationships_update,
                        (json.dumps(account_relationships), account_relationships['transaction_count'], cycle_detected, cycle_amount, destination))
 
