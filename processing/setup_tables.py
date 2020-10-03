@@ -14,7 +14,7 @@ def setup_tables():
 
     logging.info("Creating new processing tables")
     cursor.execute(
-        "CREATE TABLE account_relationships (id VARCHAR(255) PRIMARY KEY, document JSON, cycle_detected BOOL, cycle_value DECIMAL(13,5))")
+        "CREATE TABLE account_relationships (id VARCHAR(255) PRIMARY KEY, document JSON, cycle_detected BOOL, cycle_value DECIMAL(13,2))")
     cursor.execute(
         "CREATE TABLE processing_summary (id INT AUTO_INCREMENT PRIMARY KEY, start DATETIME, end DATETIME, start_msg_no int(11), end_msg_no int(11), processed_successfully BOOL)")
 
