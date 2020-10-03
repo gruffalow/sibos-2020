@@ -1,0 +1,51 @@
+{
+  "id": "RPBNCN71:0000000000000000000000000000003162",
+  "sources": {
+    "MYBNUS21:DRLC/US/VA/0000000935": {
+      "sources": {
+        "RPBNCN71:0000000000000000000000000000003162": {
+          "sources": {},
+          "credit_USD": 17359.12,
+          "transaction_count": 2
+        }
+      },
+      "credit_USD": 26038.68,
+      "transaction_count": 3
+    }
+  },
+  "destinations": {
+    "MYBNUS21:DRLC/US/VA/0000000935": {
+      "debit_USD": 17359.12,
+      "transaction_count": 2
+    }
+  },
+  "total_debit_USD": 17359.12,
+  "total_credit_USD": 26038.68,
+  "transaction_count": 2
+}
+
+{
+  "id": "MYBNUS21:DRLC/US/VA/0000000935",
+  "sources": {
+    "RPBNCN71:0000000000000000000000000000003162": {
+      "sources": {
+        "MYBNUS21:DRLC/US/VA/0000000935": {
+          "sources": {},
+          "credit_USD": 17359.12,
+          "transaction_count": 2
+        }
+      },
+      "credit_USD": 17359.12,
+      "transaction_count": 2
+    }
+  },
+  "destinations": {
+    "RPBNCN71:0000000000000000000000000000003162": {
+      "debit_USD": 26038.68,
+      "transaction_count": 3
+    }
+  },
+  "total_debit_USD": 26038.68,
+  "total_credit_USD": 17359.12,
+  "transaction_count": 3
+}
