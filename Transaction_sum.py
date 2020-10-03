@@ -40,7 +40,7 @@ try:
         #missing check if the account already exists in column and to update the value instead of adding new row
         try:
             temp = overallDf[overallDf['account'] == debitDf['account'].iloc[ind]].index[0]
-            overallDf['debit'].iloc[ind] = amount + overallDf['debit'].iloc[ind]
+            overallDf['debit'].iloc[temp] = amount + overallDf['debit'].iloc[temp]
         except:
             new_row = [debitDf['account'].iloc[ind], amount, 0]
             overallDf = overallDf.append(pd.Series(new_row, index=overallDf.columns), ignore_index=True)
@@ -56,7 +56,7 @@ try:
             
         try:
             temp = overallDf[overallDf['account'] == creditDf['account'].iloc[ind]].index[0]
-            overallDf['credit'].iloc[ind] = amount + overallDf['credit'].iloc[ind]
+            overallDf['credit'].iloc[temp] = amount + overallDf['credit'].iloc[temp]
         except:
             new_row = [creditDf['account'].iloc[ind], 0, amount]
             overallDf = overallDf.append(pd.Series(new_row, index=overallDf.columns), ignore_index=True)
