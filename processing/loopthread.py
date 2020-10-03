@@ -1,6 +1,8 @@
 import logging
 import time
-from threading import Thread, Event
+from threading import Thread
+from processing.setup_tables import setup_tables
+
 
 class LoopThread(Thread):
     def __init__(self, stop_event, interrupt_event):
@@ -9,6 +11,7 @@ class LoopThread(Thread):
         Thread.__init__(self)
 
     def run(self):
+        setup_tables()
         while not self.stop_event.is_set():
             self.loop_process()
             if self.interrupt_event.is_set():
