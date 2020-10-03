@@ -3,7 +3,7 @@ from datetime import datetime
 from database import connection as db_con
 import pandas as pd
 
-batch_max_size = 5
+batch_max_size = 1000
 processing_summary_insert = "INSERT processing_summary (start, end, start_msg_no, end_msg_no, processed_successfully) VALUES (%s, %s, %s, %s, %s)"
 
 
