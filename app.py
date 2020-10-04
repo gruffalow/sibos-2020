@@ -9,6 +9,7 @@ logging.info("Starting app")
 from flask import Flask, request
 from threading import Event
 from processing.loopthread import LoopThread
+from database import connection as db_con
 
 
 STOP_EVENT = Event()
@@ -16,6 +17,7 @@ INTERRUPT_EVENT = Event()
 thread = LoopThread(STOP_EVENT, INTERRUPT_EVENT)
 
 app = Flask(__name__)
+api = Api(app)
 
 @app.route("/interrupt")
 def interrupt():
@@ -44,6 +46,15 @@ from actions.extracts import test_extract
 app.add_url_rule('/', 'root', test_extract)
 
 thread.start()
+
+class api_relationship(Resource):
+    def get(self):
+        conn = db_con.connect_database()
+        query = conn.execute("SELECT * FROM findata.account_relationships where cycle_detected > 0") # This line performs query and returns json result
+        result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
+        return jsonify(result) 
+
+api.add_resource(api_relationship, '/relationship')
 
 # Run the app
 if __name__ == "__main__":
