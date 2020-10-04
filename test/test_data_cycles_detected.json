@@ -522,3 +522,234 @@
   "total_credit_USD": 69436.48,
   "transaction_count": 4
 }
+
+
+{
+  "id": "TRKLCA44:0000000000000000000000000000000355",
+  "sources": {
+    "YURSUST5:0000000000000000000000000000008144": {
+      "sources": {
+        "PBCHCNL9:0000000000000000000000000000003485": {
+          "sources": {
+            "MYBNUS21:DRLC/US/VA/0000006659": {
+              "sources": {},
+              "credit_USD": 9819.48,
+              "transaction_count": 1
+            },
+            "MYBNUS21:DRLC/US/VA/0000008389": {
+              "sources": {},
+              "credit_USD": 1890.54,
+              "transaction_count": 1
+            },
+            "WEOPUS59:DRLC/US/VA/0000009797": {
+              "sources": {},
+              "credit_USD": 26156.13,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000000671": {
+              "sources": {},
+              "credit_USD": 18212.25,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000001062": {
+              "sources": {},
+              "credit_USD": 12777,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000006298": {
+              "sources": {},
+              "credit_USD": 42683.92,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000007692": {
+              "sources": {},
+              "credit_USD": 12157.48,
+              "transaction_count": 1
+            },
+            "WEOPUS59:0000000000000000000000000000000872": {
+              "sources": {},
+              "credit_USD": 30625.17,
+              "transaction_count": 1
+            },
+            "WLTXUS90:0000000000000000000000000000000506": {
+              "sources": {},
+              "credit_USD": 3975.62,
+              "transaction_count": 1
+            },
+            "YURSUST5:0000000000000000000000000000002650": {
+              "sources": {},
+              "credit_USD": 14574.28,
+              "transaction_count": 1
+            },
+            "YURSUST5:0000000000000000000000000000005342": {
+              "sources": {},
+              "credit_USD": 25870.61,
+              "transaction_count": 1
+            }
+          },
+          "credit_USD": 8764.09,
+          "transaction_count": 1
+        },
+        "PBCHCNL9:0000000000000000000000000000004150": {
+          "sources": {
+            "MYBNUS21:DRLC/US/VA/0000001151": {
+              "sources": {},
+              "credit_USD": 5714.33,
+              "transaction_count": 1
+            },
+            "MYBNUS21:DRLC/US/VA/0000008228": {
+              "sources": {},
+              "credit_USD": 12816.85,
+              "transaction_count": 1
+            },
+            "MYBNUS21:DRLC/US/VA/0000009415": {
+              "sources": {},
+              "credit_USD": 37160.84,
+              "transaction_count": 1
+            },
+            "WEOPUS59:DRLC/US/VA/0000005808": {
+              "sources": {},
+              "credit_USD": 9829.17,
+              "transaction_count": 1
+            },
+            "YURSUST5:DRLC/US/VA/0000001880": {
+              "sources": {},
+              "credit_USD": 2143.12,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000000697": {
+              "sources": {},
+              "credit_USD": 6746.92,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000001030": {
+              "sources": {},
+              "credit_USD": 5473.89,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000001097": {
+              "sources": {},
+              "credit_USD": 35546.07,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000001101": {
+              "sources": {},
+              "credit_USD": 8888.75,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000001754": {
+              "sources": {},
+              "credit_USD": 1945.97,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000002551": {
+              "sources": {},
+              "credit_USD": 12881.06,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000003650": {
+              "sources": {},
+              "credit_USD": 70308.09,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000008794": {
+              "sources": {},
+              "credit_USD": 8872.2,
+              "transaction_count": 1
+            },
+            "MYBNUS21:0000000000000000000000000000008941": {
+              "sources": {},
+              "credit_USD": 2458.8,
+              "transaction_count": 1
+            },
+            "WEOPUS59:0000000000000000000000000000004214": {
+              "sources": {},
+              "credit_USD": 8437.92,
+              "transaction_count": 1
+            },
+            "YURSUST5:0000000000000000000000000000002700": {
+              "sources": {},
+              "credit_USD": 2499.62,
+              "transaction_count": 1
+            }
+          },
+          "credit_USD": 2311.96,
+          "transaction_count": 1
+        },
+        "TRKLCA44:0000000000000000000000000000007634": {
+          "sources": {},
+          "credit_USD": 19102.5,
+          "transaction_count": 1
+        },
+        "TRKLCA44:0000000000000000000000000000007737": {
+          "sources": {},
+          "credit_USD": 17476.19,
+          "transaction_count": 1
+        }
+      },
+      "credit_USD": 27253.46,
+      "transaction_count": 1
+    },
+    "YURSUST5:0000000000000000000000000000009926": {
+      "sources": {
+        "LAMBRU56:DRLC/US/VA/0000001149": {
+          "sources": {},
+          "credit_USD": 1562.3,
+          "transaction_count": 1
+        },
+        "RTOUCA11:DRLC/US/VA/0000006934": {
+          "sources": {},
+          "credit_USD": 13722.89,
+          "transaction_count": 1
+        },
+        "RTOUCA11:DRLC/US/VA/0000009487": {
+          "sources": {},
+          "credit_USD": 2039.35,
+          "transaction_count": 1
+        },
+        "LAMBRU56:0000000000000000000000000000000024": {
+          "sources": {},
+          "credit_USD": 11267.25,
+          "transaction_count": 1
+        },
+        "RTOUCA11:0000000000000000000000000000000762": {
+          "sources": {},
+          "credit_USD": 11819.61,
+          "transaction_count": 1
+        },
+        "TRKLCA44:0000000000000000000000000000000355": {
+          "sources": {},
+          "credit_USD": 27870.35,
+          "transaction_count": 1
+        }
+      },
+      "credit_USD": 10109.08,
+      "transaction_count": 1
+    }
+  },
+  "destinations": {
+    "MYBNUS21:0000000000000000000000000000001202": {
+      "debit_USD": 25528.22,
+      "transaction_count": 1
+    },
+    "MYBNUS21:0000000000000000000000000000001471": {
+      "debit_USD": 12768.36,
+      "transaction_count": 1
+    },
+    "MYBNUS21:0000000000000000000000000000008471": {
+      "debit_USD": 9916.92,
+      "transaction_count": 1
+    },
+    "MYBNUS21:0000000000000000000000000000009111": {
+      "debit_USD": 14572.47,
+      "transaction_count": 1
+    },
+    "YURSUST5:0000000000000000000000000000009926": {
+      "debit_USD": 27870.35,
+      "transaction_count": 1
+    }
+  },
+  "total_debit_USD": 90656.32,
+  "total_credit_USD": 37362.54,
+  "transaction_count": 5
+}
