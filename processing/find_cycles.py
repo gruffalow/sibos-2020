@@ -15,7 +15,8 @@ account_relationships_select = "SELECT document, cycle_detected, cycle_value FRO
 apifx = APIConverter()
 
 
-def detect_cycles(destination, id, amount, sources):
+def detect_cycles(destination, id, amount, sources, depth):
+
     cycle_detected = False
     cycle_amount = 0
     for source in sources:
@@ -23,8 +24,13 @@ def detect_cycles(destination, id, amount, sources):
             sources[source]['sources'] = {}
             source_cycle_detected = True
             source_cycle_amount = sources[source]['credit_USD']
+        # truncate at maximum depth to sources given technical limitation in mysql to 100 levels in json.
+        elif depth>20:
+            sources[source]['sources'] = {}
+            source_cycle_detected = False
+            source_cycle_amount = 0
         else:
-            source_cycle_detected, source_cycle_amount = detect_cycles(destination, source, sources[source]['credit_USD'], sources[source]['sources'])
+            source_cycle_detected, source_cycle_amount = detect_cycles(destination, source, sources[source]['credit_USD'], sources[source]['sources'], depth+1)
 
         cycle_detected = cycle_detected | source_cycle_detected
         cycle_amount = cycle_amount + source_cycle_amount
@@ -51,7 +57,7 @@ def add_sources(destination, id, amount, destination_transaction_count, new_sour
             "destinations": {}
         }
         # truncate sources at destination
-        cycle_detected, cycle_amount = detect_cycles(destination, id, amount, sources)
+        cycle_detected, cycle_amount = detect_cycles(destination, id, amount, sources, 1)
         cursor.execute(account_relationships_insert,
                        (destination, json.dumps(account_relationships), account_relationships['transaction_count'], cycle_detected, cycle_amount))
     else:
@@ -63,7 +69,7 @@ def add_sources(destination, id, amount, destination_transaction_count, new_sour
         source_details['sources'] = sources
         account_relationships['total_credit_USD'] = account_relationships['total_credit_USD'] + amount_change
         account_relationships['sources'][id] = source_details
-        cycle_detected, cycle_amount = detect_cycles(destination, id, source_details['credit_USD'], account_relationships['sources'])
+        cycle_detected, cycle_amount = detect_cycles(destination, id, source_details['credit_USD'], account_relationships['sources'], 1)
         cursor.execute(account_relationships_update,
                        (json.dumps(account_relationships), account_relationships['transaction_count'], cycle_detected, cycle_amount, destination))
 
