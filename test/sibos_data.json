@@ -1,0 +1,40 @@
+{
+  "id": "MYBNUS21:0000000000000000000000000000000021",
+  "sources": {
+    "RTOUCA11:DRLC/US/VA/0000002336": {
+      "sources": {},
+      "credit_USD": 3544.87,
+      "transaction_count": 1
+    },
+    "RTOUCA11:0000000000000000000000000000005923": {
+      "sources": {},
+      "credit_USD": 220344.27,
+      "transaction_count": 1
+    }
+  },
+  "destinations": {
+    "PBCHCNL9:0000000000000000000000000000002741": {
+      "debit_USD": 295727.26,
+      "transaction_count": 1
+    },
+    "PBCHCNL9:0000000000000000000000000000009758": {
+      "debit_USD": 12134.53,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000001782": {
+      "debit_USD": 7531.98,
+      "transaction_count": 1
+    },
+    "RPBNCN71:0000000000000000000000000000001842": {
+      "debit_USD": 9364.87,
+      "transaction_count": 1
+    },
+    "VJZQCN94:0000000000000000000000000000000997": {
+      "debit_USD": 2929.63,
+      "transaction_count": 1
+    }
+  },
+  "total_debit_USD": 327688.27,
+  "total_credit_USD": 223889.14,
+  "transaction_count": 5
+}

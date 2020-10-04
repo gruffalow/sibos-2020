@@ -1,15 +1,18 @@
 import os
 import logging
+import json
 
 # Setup logging to get lots of information for speeds sake
 logging.basicConfig(level=logging.INFO)
 logging.getLogger().setLevel(logging.INFO)
 logging.info("Starting app")
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from threading import Event
 from processing.loopthread import LoopThread
 from database import connection as db_con
+
+from flask_restful import Resource, Api
 
 
 STOP_EVENT = Event()
@@ -50,8 +53,15 @@ thread.start()
 class api_relationship(Resource):
     def get(self):
         conn = db_con.connect_database()
-        query = conn.execute("SELECT * FROM findata.account_relationships where cycle_detected > 0") # This line performs query and returns json result
-        result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
+        cursor = conn.cursor(dictionary=True)
+        query = cursor.execute("SELECT * FROM account_relationships where cycle_detected > 0") # This line performs query and returns json result
+        records = cursor.fetchall()
+        documents = []
+        for row in records:
+            documents.append(json.loads(row['document']))
+        # result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in documents]}
+        result = {'data': documents}
+        db_con.disconnect_database(conn)
         return jsonify(result) 
 
 api.add_resource(api_relationship, '/relationship')
