@@ -8,9 +8,9 @@ from utils.api_fx import APIConverter
 
 batch_max_size = 1000
 processing_summary_insert = "INSERT processing_summary (start, end, start_msg_no, end_msg_no, processed_successfully) VALUES (%s, %s, %s, %s, %s)"
-account_relationships_insert = "INSERT account_relationships (id, document, transaction_count, cycle_detected, cycle_value) VALUES (%s, %s, %s, %s, %s)"
-account_relationships_update = "UPDATE account_relationships SET document = %s, transaction_count = %s, cycle_detected = %s, cycle_value = %s WHERE id = %s"
-account_relationships_select = "SELECT document, cycle_detected, cycle_value FROM account_relationships WHERE id = %s"
+account_relationships_insert = "INSERT account_relationships_deep (id, document, transaction_count, cycle_detected, cycle_value) VALUES (%s, %s, %s, %s, %s)"
+account_relationships_update = "UPDATE account_relationships_deep SET document = %s, transaction_count = %s, cycle_detected = %s, cycle_value = %s WHERE id = %s"
+account_relationships_select = "SELECT document, cycle_detected, cycle_value FROM account_relationships_deep WHERE id = %s"
 
 apifx = APIConverter()
 
@@ -32,7 +32,11 @@ def detect_cycles(destination, id, amount, sources):
     return cycle_detected, cycle_amount
 
 
-def add_sources(destination, id, amount, destination_transaction_count, new_sources, cursor):
+def add_sources(destination, id, amount, destination_transaction_count, new_sources, visited_destinations, cursor):
+
+    if destination in visited_destinations:
+        return
+
     sources = dict(new_sources)
     cursor.execute(account_relationships_select, (destination,))
     account_relationships_record = cursor.fetchone()
@@ -53,14 +57,21 @@ def add_sources(destination, id, amount, destination_transaction_count, new_sour
     else:
         account_relationships = json.loads(account_relationships_record['document'])
         source_details = account_relationships['sources'].get(id, {"credit_USD": 0, "transaction_count": 0, "sources": {}})
-        source_details['credit_USD'] = source_details['credit_USD'] + amount
+        amount_change = amount - source_details['credit_USD']
+        source_details['credit_USD'] = source_details['credit_USD'] + amount_change
         source_details['transaction_count'] = destination_transaction_count
         source_details['sources'] = sources
-        account_relationships['total_credit_USD'] = account_relationships['total_credit_USD'] + amount
+        account_relationships['total_credit_USD'] = account_relationships['total_credit_USD'] + amount_change
         account_relationships['sources'][id] = source_details
         cycle_detected, cycle_amount = detect_cycles(destination, id, source_details['credit_USD'], account_relationships['sources'])
         cursor.execute(account_relationships_update,
                        (json.dumps(account_relationships), account_relationships['transaction_count'], cycle_detected, cycle_amount, destination))
+
+    previous_destinations = visited_destinations.copy()
+    previous_destinations.append(destination)
+
+    for onwards_dest in account_relationships['destinations']:
+        add_sources(onwards_dest, destination, account_relationships['destinations'][onwards_dest]['debit_USD'], account_relationships['destinations'][onwards_dest]['transaction_count'], account_relationships['sources'], previous_destinations, cursor)
 
 
 def process_remaining() -> bool:
@@ -114,7 +125,8 @@ def process_remaining() -> bool:
             account_relationships['destinations'][destination] = destination_details
             cursor.execute(account_relationships_update, (json.dumps(account_relationships), account_relationships['transaction_count'], account_relationships_record['cycle_detected'], account_relationships_record['cycle_value'], id))
 
-        add_sources(destination, id, amount, destination_transaction_count, account_relationships['sources'], cursor)
+        for dest in account_relationships['destinations']:
+            add_sources(dest, id, account_relationships['destinations'][dest]['debit_USD'], account_relationships['destinations'][dest]['transaction_count'], account_relationships['sources'], [], cursor)
 
     start_msg_no = df['msgno'].iloc[0]
     end_msg_no = df['msgno'].iloc[df.last_valid_index()]
