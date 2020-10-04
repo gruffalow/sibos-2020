@@ -125,8 +125,9 @@ def process_remaining() -> bool:
             account_relationships['destinations'][destination] = destination_details
             cursor.execute(account_relationships_update, (json.dumps(account_relationships), account_relationships['transaction_count'], account_relationships_record['cycle_detected'], account_relationships_record['cycle_value'], id))
 
-        for dest in account_relationships['destinations']:
-            add_sources(dest, id, account_relationships['destinations'][dest]['debit_USD'], account_relationships['destinations'][dest]['transaction_count'], account_relationships['sources'], [], cursor)
+        add_sources(destination, id, account_relationships['destinations'][destination]['debit_USD'],
+                    account_relationships['destinations'][destination]['transaction_count'],
+                    account_relationships['sources'], [], cursor)
 
     start_msg_no = df['msgno'].iloc[0]
     end_msg_no = df['msgno'].iloc[df.last_valid_index()]
