@@ -7,6 +7,8 @@ logging.getLogger().setLevel(logging.INFO)
 logging.info("Starting app")
 
 from flask import Flask, request
+from flask_restful import Resource, Api
+from flask.ext.jsonpify import jsonify
 from threading import Event
 from processing.loopthread import LoopThread
 from database import connection as db_con
